@@ -24,8 +24,10 @@ Dieselbe App läuft auch kostenlos auf GitHub, etwa alle 10 Minuten. Dann muss d
 - **Sets** wählst du dort im Reiter „Meine Sets“ und übernimmst sie mit „Kopieren“ und „auswahl.json bearbeiten“.
 - **Sonstige Einstellungen** stehen in `einstellungen.json`.
 - Das **ntfy-Thema** liegt als GitHub-Geheimnis `NTFY_THEMA` und erscheint nie auf der öffentlichen Seite.
-- Laufen PC- und Cloud-Version gleichzeitig mit demselben Thema, kommt jede Meldung doppelt. Dann am PC ntfy
-  ausschalten (Windows-Meldungen bleiben) oder den Autostart entfernen.
+- MediaMarkt, Proshop und Spiele Max sperren GitHub-Server (getestet am 18.10.2026). Deshalb ist die Arbeit aufgeteilt:
+  **Die Cloud** prüft Gate, Card-Corner, TCGViert, CardCosmos, Elbenwald, Müller, die News und die Termine.
+  **Der PC** prüft, wenn er an ist, nur MediaMarkt, Proshop und Spiele Max. So kommt keine Meldung doppelt.
+  Schaltest du am PC wieder mehr Shops an, bekommst du deren Meldungen doppelt.
 - GitHub startet geplante Läufe nicht minutengenau. Meist liegen 10 bis 15 Minuten dazwischen.
 
 ## Push aufs Handy (einmalig, 2 Minuten)
