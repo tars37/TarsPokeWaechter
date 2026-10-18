@@ -44,14 +44,14 @@
     "cardcosmos": true,
     "elbenwald": true,
     "mueller": true,
-    "mediamarkt": true,
-    "proshop": true,
-    "spielemax": true,
+    "mediamarkt": false,
+    "proshop": false,
+    "spielemax": false,
     "cardknights": false,
     "pokitrio": false,
     "shophotep": false
   },
-  "_shops_hilfe": "true = wird überwacht, false = aus. Card Knights, Pokitrio und Shophotep sind kleine Shops, deren Ruf nicht geprüft ist.",
+  "_shops_hilfe": "true = wird überwacht, false = aus. MediaMarkt, Proshop und Spiele Max sperren GitHub-Server (getestet 18.10.2026) und gehen nur in der PC-Version. Card Knights, Pokitrio und Shophotep sind kleine Shops, deren Ruf nicht geprüft ist.",
 
   "merkliste": [],
   "_merkliste_hilfe": "Eigene Produktlinks, z. B. [{\"url\": \"https://shop.de/produkt\", \"name\": \"Delta Display\"}]"
