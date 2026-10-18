@@ -1,0 +1,706 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>TarsPokeWächter</title>
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/icon-192.png">
+<meta name="apple-mobile-web-app-title" content="TarsPokeWächter">
+<meta name="theme-color" content="#e3350d">
+<style>
+:root{
+  --bg:#f5f6f8; --flaeche:#ffffff; --flaeche2:#eef0f3; --text:#16181d; --leise:#5d6470; --linie:#dde1e7;
+  --rot:#e3350d; --rot-weich:#fde8e3; --gelb:#ffcb05; --gruen:#1f9d55; --gruen-weich:#e3f5ea;
+  --blau:#2563eb; --blau-weich:#e6eeff; --grau-weich:#eceef2; --orange:#c2620a; --orange-weich:#fff1e0;
+  --schatten:0 1px 2px rgba(16,24,40,.06),0 1px 3px rgba(16,24,40,.08); --r:14px;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#0f1115; --flaeche:#171a21; --flaeche2:#1f232c; --text:#eceef2; --leise:#9aa3b2; --linie:#2a2f3a;
+    --rot:#ff5a36; --rot-weich:#3a1d17; --gelb:#ffd84d; --gruen:#3ccf7e; --gruen-weich:#14301f;
+    --blau:#6b9bff; --blau-weich:#1a2540; --grau-weich:#232833; --orange:#ffad5c; --orange-weich:#35240f;
+    --schatten:0 1px 2px rgba(0,0,0,.4);
+  }
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--text);font:15px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+a{color:var(--blau)}
+header{position:sticky;top:0;z-index:5;background:var(--flaeche);border-bottom:1px solid var(--linie)}
+.kopf{max-width:1100px;margin:0 auto;padding:12px 16px 0;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.logo{display:flex;align-items:center;gap:10px;font-weight:750;font-size:19px;letter-spacing:-.01em}
+.logo svg{width:30px;height:30px}
+.status{font-size:13px;color:var(--leise);display:flex;align-items:center;gap:6px}
+.punkt{width:9px;height:9px;border-radius:50%;background:var(--gruen);display:inline-block}
+.punkt.warn{background:var(--orange)} .punkt.aus{background:var(--rot)}
+.knoepfe{margin-left:auto;display:flex;gap:8px}
+button,.knopf{font:inherit;font-size:14px;border:1px solid var(--linie);background:var(--flaeche);color:var(--text);border-radius:10px;padding:7px 12px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+button.haupt,.knopf.haupt{background:var(--rot);border-color:var(--rot);color:#fff;font-weight:600}
+button:disabled{opacity:.6;cursor:default}
+nav{max-width:1100px;margin:0 auto;padding:0 8px;display:flex;gap:2px;overflow-x:auto;scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+nav button{border:0;border-radius:0;background:none;padding:12px 10px 10px;color:var(--leise);border-bottom:3px solid transparent;white-space:nowrap;font-weight:550}
+nav button.an{color:var(--text);border-bottom-color:var(--rot)}
+nav .zahl{background:var(--rot);color:#fff;border-radius:999px;font-size:11px;padding:1px 7px;margin-left:4px}
+main{max-width:1100px;margin:0 auto;padding:16px 16px 60px}
+.seite{display:none}.seite.an{display:block}
+.leiste{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
+.chip{border:1px solid var(--linie);background:var(--flaeche);border-radius:999px;padding:5px 11px;font-size:13px;cursor:pointer;user-select:none}
+.chip.an{background:var(--text);color:var(--bg);border-color:var(--text)}
+input[type=search],input[type=text],input[type=number],input[type=url],input[type=time],select,textarea{font:inherit;font-size:14px;border:1px solid var(--linie);background:var(--flaeche);color:var(--text);border-radius:10px;padding:8px 10px;min-width:0}
+input[type=search]{flex:1 1 220px}
+.raster{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.karte{background:var(--flaeche);border:1px solid var(--linie);border-radius:var(--r);box-shadow:var(--schatten);padding:12px;display:flex;gap:12px;min-width:0}
+.karte img{width:64px;height:64px;object-fit:contain;border-radius:8px;background:#fff;flex:none}
+.karte .ohnebild{width:64px;height:64px;border-radius:8px;background:var(--flaeche2);flex:none;display:grid;place-items:center;color:var(--leise);font-size:22px}
+.karte .inhalt{min-width:0;flex:1;display:flex;flex-direction:column;gap:6px}
+.titel{font-weight:600;line-height:1.3;overflow-wrap:anywhere}
+.meta{font-size:13px;color:var(--leise);display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.preis{font-weight:700;font-variant-numeric:tabular-nums}
+.preis.hoch{color:var(--rot)}
+.badge{font-size:12px;border-radius:6px;padding:1px 7px;font-weight:600;background:var(--grau-weich);color:var(--leise);white-space:nowrap}
+.b-lieferbar{background:var(--gruen-weich);color:var(--gruen)} .b-knapp{background:var(--orange-weich);color:var(--orange)}
+.b-vorbestellbar{background:var(--blau-weich);color:var(--blau)} .b-ausverkauft{background:var(--rot-weich);color:var(--rot)}
+.zeile-unten{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:auto}
+.leer{color:var(--leise);text-align:center;padding:40px 10px;border:1px dashed var(--linie);border-radius:var(--r)}
+.liste{display:flex;flex-direction:column;gap:8px}
+.eintrag{background:var(--flaeche);border:1px solid var(--linie);border-radius:12px;padding:10px 12px;display:flex;gap:12px;align-items:flex-start}
+.eintrag .zeit{font-size:12px;color:var(--leise);white-space:nowrap;min-width:78px;font-variant-numeric:tabular-nums}
+.eintrag .mitte{flex:1;min-width:0}
+.symbol{font-size:18px;line-height:1.2}
+.grund{font-size:12px;color:var(--leise)}
+h2{font-size:17px;margin:22px 0 10px} h2:first-child{margin-top:0}
+.monat{font-size:13px;font-weight:700;color:var(--leise);text-transform:uppercase;letter-spacing:.04em;margin:18px 0 8px}
+.countdown{font-weight:700;font-size:13px;white-space:nowrap}
+.countdown.bald{color:var(--rot)}
+.vorbei{opacity:.55}
+table{width:100%;border-collapse:collapse;background:var(--flaeche);border:1px solid var(--linie);border-radius:var(--r);overflow:hidden}
+th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--linie);font-size:14px;vertical-align:top}
+th{font-size:12px;color:var(--leise);font-weight:650;background:var(--flaeche2)}
+tr:last-child td{border-bottom:0}
+.tabelle-huelle{overflow-x:auto}
+.feld{background:var(--flaeche);border:1px solid var(--linie);border-radius:var(--r);padding:14px;margin-bottom:12px}
+.feld h3{margin:0 0 10px;font-size:15px}
+.reihe{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:8px 0}
+.reihe label{display:flex;gap:6px;align-items:center}
+.grenzen{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:8px}
+.grenzen label{display:flex;justify-content:space-between;gap:8px;align-items:center;font-size:14px}
+.grenzen input{width:84px}
+.hinweis{font-size:13px;color:var(--leise)}
+code{background:var(--flaeche2);padding:2px 6px;border-radius:6px;font-size:13px;overflow-wrap:anywhere}
+.schritte{margin:0;padding-left:20px} .schritte li{margin:6px 0}
+#qr{background:#fff;padding:8px;border-radius:10px;display:inline-block}
+.reihenkopf{display:flex;align-items:center;gap:8px;flex-wrap:wrap;cursor:pointer;margin-bottom:10px;font-size:16px}
+.reihenkopf input,.setzeile input{width:18px;height:18px;accent-color:var(--rot);flex:none}
+.setraster{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:8px}
+.setzeile{display:flex;align-items:center;gap:10px;border:1px solid var(--linie);border-radius:10px;padding:8px 10px;cursor:pointer;min-width:0}
+.setzeile:has(input:checked){border-color:var(--rot);background:var(--rot-weich)}
+.setzeile .name{flex:1;min-width:0;line-height:1.3}
+.setzeile .name b{overflow-wrap:anywhere}
+.setbadge{font-size:12px;border-radius:6px;padding:1px 7px;background:var(--blau-weich);color:var(--blau);font-weight:600;white-space:nowrap}
+select{max-width:100%}
+.nur-cloud{display:none !important}
+.cloud .nur-cloud{display:block !important}
+.cloud span.nur-cloud{display:inline !important}
+.cloud .nur-lokal{display:none !important}
+.wolke{display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:600;border-radius:999px;padding:1px 8px;background:var(--blau-weich);color:var(--blau)}
+.toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:var(--text);color:var(--bg);padding:10px 16px;border-radius:10px;font-size:14px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:20;max-width:calc(100% - 32px)}
+.toast.an{opacity:1}
+@media (max-width:640px){
+  .kopf{padding:10px 16px 0}
+  .knoepfe{margin-left:0;width:100%}
+  .knoepfe button{flex:1;justify-content:center}
+  .raster{grid-template-columns:1fr}
+  .eintrag .zeit{min-width:0}
+  .eintrag{flex-wrap:wrap}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="kopf">
+    <div class="logo">
+      <svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="29" fill="var(--rot)"/><path d="M3 32h58a29 29 0 0 1-58 0z" fill="#fff"/><rect x="3" y="29.5" width="58" height="5" fill="#16181d"/><circle cx="32" cy="32" r="9" fill="#fff" stroke="#16181d" stroke-width="5"/></svg>
+      TarsPokeWächter
+    </div>
+    <div class="status" id="status"><span class="punkt"></span> lädt …</div>
+    <div class="knoepfe nur-lokal">
+      <button id="btnPruefen" class="haupt">↻ Jetzt prüfen</button>
+      <button id="btnTest">🔔 Test-Push</button>
+    </div>
+  </div>
+  <nav id="tabs">
+    <button data-seite="verfuegbar" class="an">Verfügbar <span class="zahl" id="zVerf">0</span></button>
+    <button data-seite="sets">Meine Sets</button>
+    <button data-seite="meldungen">Meldungen</button>
+    <button data-seite="termine">Termine</button>
+    <button data-seite="news">News &amp; Deals</button>
+    <button data-seite="shops">Shops</button>
+    <button data-seite="einstellungen">Handy &amp; Einstellungen</button>
+  </nav>
+</header>
+
+<main>
+  <section class="seite an" id="verfuegbar">
+    <div class="leiste">
+      <input type="search" id="suche" placeholder="Suchen, z. B. Delta, Display, Top-Trainer …">
+      <select id="setFilter" aria-label="Set"></select>
+      <label class="chip" id="chipGrenze"><input type="checkbox" id="nurGrenze" hidden> nur faire Preise</label>
+      <label class="chip" id="chipAus"><input type="checkbox" id="auchAus" hidden> auch ausverkaufte</label>
+      <label class="chip" id="chipMp"><input type="checkbox" id="auchMp" hidden> auch Marktplatz-Händler</label>
+    </div>
+    <div class="leiste" id="filterSprache"></div>
+    <div class="leiste" id="filterArt"></div>
+    <div class="raster" id="produkte"></div>
+  </section>
+
+  <section class="seite" id="sets">
+    <div class="feld">
+      <div class="reihe" style="justify-content:space-between;margin:0">
+        <div style="min-width:0">
+          <b id="setsZusammenfassung">…</b>
+          <div class="hinweis">Gemeldet wird nur, was zu deiner Auswahl passt. Ist nichts ausgewählt, meldet der Wächter alle Sets.
+            <span class="nur-lokal">Änderungen werden sofort gespeichert.</span>
+            <span class="nur-cloud">Änderungen übernimmst du mit dem Kasten unten in die Cloud.</span></div>
+        </div>
+        <button id="setsLeeren">Auswahl aufheben</button>
+      </div>
+    </div>
+    <div class="feld nur-cloud" id="cloudAuswahl">
+      <h3>☁️ Auswahl in die Cloud übernehmen</h3>
+      <p class="hinweis" id="cloudAuswahlStatus"></p>
+      <ol class="schritte">
+        <li>Unten auf <b>„Kopieren“</b> tippen.</li>
+        <li><b>„auswahl.json bearbeiten“</b> tippen – GitHub öffnet sich (falls nötig anmelden).</li>
+        <li>Dort den ganzen Text markieren, durch Einfügen ersetzen und auf <b>„Commit changes“</b> tippen.</li>
+      </ol>
+      <div class="reihe">
+        <button id="cloudKopieren" class="haupt">Kopieren</button>
+        <a class="knopf" id="cloudBearbeiten" target="_blank" rel="noopener">auswahl.json bearbeiten</a>
+      </div>
+      <p class="hinweis">Danach startet automatisch ein Lauf. Nach 1–3 Minuten gilt deine neue Auswahl.</p>
+    </div>
+    <div id="setReihen"></div>
+    <div class="feld">
+      <h3>Welche Produktarten?</h3>
+      <div class="reihe" id="artWahl"></div>
+      <p class="hinweis">Nichts ausgewählt = alle Arten.</p>
+    </div>
+    <div class="feld">
+      <h3>Eigenes Set hinzufügen</h3>
+      <p class="hinweis">Für Sets, die noch nicht in der Liste stehen, z. B. direkt nach einer Ankündigung. Suchworte mit Komma trennen, am besten deutscher und englischer Name.</p>
+      <div class="reihe">
+        <input type="text" id="esName" placeholder="Name, z. B. Neues Set" style="flex:1 1 180px">
+        <input type="text" id="esWorte" placeholder="Suchworte, z. B. Neues Set, New Set" style="flex:2 1 240px">
+        <button id="esHinzu" class="haupt">Hinzufügen</button>
+      </div>
+      <div class="liste" id="esListe"></div>
+    </div>
+  </section>
+
+  <section class="seite" id="meldungen">
+    <div class="leiste">
+      <label class="chip an" data-ef="alle">Alle</label>
+      <label class="chip" data-ef="gemeldet">Nur gesendete</label>
+    </div>
+    <div class="liste" id="ereignisse"></div>
+  </section>
+
+  <section class="seite" id="termine">
+    <p class="hinweis" id="termineHinweis"></p>
+    <div id="releases"></div>
+  </section>
+
+  <section class="seite" id="news">
+    <div class="liste" id="newsliste"></div>
+  </section>
+
+  <section class="seite" id="shops">
+    <h2>Automatisch überwacht</h2>
+    <div class="tabelle-huelle"><table id="shoptabelle"></table></div>
+    <p class="hinweis">Jeder Shop wird im eingestellten Takt abgefragt (mit Zufallsabstand, robots.txt wird beachtet). Bei Fehlern wartet der Wächter automatisch länger.</p>
+    <h2>Eigene Produktlinks (Merkliste)</h2>
+    <div class="feld">
+      <div class="reihe nur-lokal">
+        <input type="url" id="mlUrl" placeholder="https://… Link zu einer Produktseite" style="flex:1 1 280px">
+        <input type="text" id="mlName" placeholder="Name (optional)" style="flex:0 1 200px">
+        <button id="mlHinzu" class="haupt">Beobachten</button>
+      </div>
+      <p class="hinweis nur-cloud">In der Cloud trägst du Links in <code>einstellungen.json</code> unter <code>"merkliste"</code> ein (Reiter „Handy &amp; Einstellungen“).</p>
+      <p class="hinweis">Funktioniert bei vielen Shops, die ihre Verfügbarkeit im Seitencode angeben. Gesperrte Shops (siehe unten) lassen sich so nicht prüfen.</p>
+      <div class="liste" id="merkliste"></div>
+    </div>
+    <h2>Nicht automatisch prüfbar – bitte selbst schauen</h2>
+    <div class="liste" id="manuell"></div>
+  </section>
+
+  <section class="seite" id="einstellungen">
+    <div class="nur-cloud" id="cloudEinstellungen"></div>
+    <div class="nur-lokal">
+    <div class="feld">
+      <h3>📱 Push-Nachrichten aufs Handy (ntfy)</h3>
+      <ol class="schritte">
+        <li>App <b>ntfy</b> installieren: <a href="https://play.google.com/store/apps/details?id=io.heckel.ntfy" target="_blank" rel="noopener">Android (Google Play)</a> · <a href="https://apps.apple.com/app/ntfy/id1625396347" target="_blank" rel="noopener">iPhone (App Store)</a>. Kostenlos, kein Konto nötig.</li>
+        <li>In der App auf <b>+</b> tippen und dieses Thema abonnieren: <code id="ntfyThema">…</code> <button id="kopieren" style="padding:3px 8px;font-size:12px">kopieren</button><br><span class="hinweis">Oder den QR-Code mit dem Handy scannen und „In ntfy abonnieren“ wählen.</span></li>
+        <li>Unten auf <b>Test-Push senden</b> tippen – es sollte sofort klingeln.</li>
+      </ol>
+      <div class="reihe"><div id="qr"></div></div>
+      <div class="reihe">
+        <label><input type="checkbox" id="ntfyAktiv"> ntfy-Push aktiv</label>
+        <label><input type="checkbox" id="ntfyBilder"> Produktbild mitschicken</label>
+        <button id="btnTest2" class="haupt">🔔 Test-Push senden</button>
+      </div>
+      <p class="hinweis">Das Thema ist dein „Kanal“. Wer den Namen kennt, kann mitlesen – also nicht öffentlich posten.</p>
+    </div>
+
+    <div class="feld">
+      <h3>Was soll gemeldet werden?</h3>
+      <div class="reihe" id="eArten"></div>
+      <div class="reihe" id="eSprachen"></div>
+      <div class="reihe">
+        <label><input type="checkbox" id="marktplatz"> Marktplatz-Händler (z. B. bei MediaMarkt) ignorieren</label>
+      </div>
+      <div class="reihe">
+        <label>Pflicht-Stichworte <input type="text" id="pflicht" placeholder="z. B. Delta, Display" style="width:220px"></label>
+        <label>Sperr-Stichworte <input type="text" id="sperre" placeholder="z. B. Japan, Tin" style="width:220px"></label>
+      </div>
+      <p class="hinweis">Stichworte mit Komma trennen. Pflicht-Stichworte: Es wird nur gemeldet, wenn mindestens eins im Produktnamen steht.</p>
+    </div>
+
+    <div class="feld">
+      <h3>Preisgrenzen gegen Scalper-Preise</h3>
+      <div class="reihe"><label><input type="checkbox" id="grenzeAktiv"> Nur melden, wenn der Preis höchstens so hoch ist:</label></div>
+      <div class="grenzen" id="grenzen"></div>
+      <p class="hinweis">Zur Orientierung: Die UVP für ein deutsches 36er-Display liegt laut tcgcheck bei etwa 180 €.</p>
+    </div>
+
+    <div class="feld">
+      <h3>Takt &amp; Ruhezeit</h3>
+      <div class="reihe">
+        <label>Shops prüfen alle <input type="number" id="intervall" min="2" max="120" step="1" style="width:70px"> Minuten</label>
+        <label>Gleiches Produkt höchstens alle <input type="number" id="abkling" min="0" max="1440" step="5" style="width:80px"> Minuten melden</label>
+      </div>
+      <div class="reihe">
+        <label><input type="checkbox" id="ruheAktiv"> Ruhezeit (Push ohne Ton)</label>
+        <label>von <input type="time" id="ruheVon"></label>
+        <label>bis <input type="time" id="ruheBis"></label>
+      </div>
+      <div class="reihe"><label><input type="checkbox" id="winAktiv"> Windows-Meldungen am PC</label></div>
+    </div>
+
+    <div class="feld">
+      <h3>Weitere Kanäle (optional)</h3>
+      <div class="reihe">
+        <label><input type="checkbox" id="tgAktiv"> Telegram</label>
+        <input type="text" id="tgToken" placeholder="Bot-Token" style="flex:1 1 220px">
+        <input type="text" id="tgChat" placeholder="Chat-ID" style="flex:0 1 140px">
+      </div>
+      <div class="reihe">
+        <label><input type="checkbox" id="dcAktiv"> Discord</label>
+        <input type="text" id="dcHook" placeholder="Webhook-Adresse" style="flex:1 1 320px">
+      </div>
+    </div>
+
+    <div class="feld">
+      <h3>Dashboard auf dem Handy (im selben WLAN)</h3>
+      <div class="reihe"><label><input type="checkbox" id="wlan"> Im WLAN freigeben (wirkt nach Neustart des Wächters)</label></div>
+      <p class="hinweis" id="wlanUrl"></p>
+    </div>
+
+    <div class="reihe"><button id="speichern" class="haupt">Einstellungen speichern</button></div>
+    </div>
+  </section>
+</main>
+<div class="toast" id="toast"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script>
+const K = new URLSearchParams(location.search).get('k') || '';
+const STATUS = {lieferbar:'lieferbar', knapp:'nur noch wenige', vorbestellbar:'vorbestellbar', ausverkauft:'ausverkauft', unbekannt:'unklar'};
+const EREIGNIS = {wieder_da:['🔔','Wieder da'], neu_bestellbar:['🆕','Neu & bestellbar'], vorverkauf:['📅','Vorverkauf offen'],
+  neu_gelistet:['👀','Neu gelistet'], ausverkauft:['⛔','Ausverkauft'], preis_runter:['💶','Preis gesenkt']};
+const SPRACHEN = {DE:'Deutsch', EN:'Englisch', JP:'Japanisch', CN:'Chinesisch', KR:'Koreanisch', TH:'Thai', '?':'unbekannt'};
+let Z = {art_namen:{}}, P = [], E = [], EIN = null, SETS = {reihen:[], ohne_set:{}}, SETNAMEN = {};
+const fSprache = new Set(), fArt = new Set();
+let efNur = false;
+
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const klein = u => u.includes('cdn.shopify.com') ? u + (u.includes('?') ? '&' : '?') + 'width=160' : u;
+const euro = x =>x == null ? 'Preis ?' : x.toLocaleString('de-DE', {style:'currency', currency:'EUR'});
+function vor(ts){ if(!ts) return '–'; const s = Math.round(Date.now()/1000 - ts);
+  if (s < 60) return 'gerade eben'; if (s < 3600) return `vor ${Math.round(s/60)} Min.`;
+  if (s < 86400) return `vor ${Math.round(s/3600)} Std.`; return `vor ${Math.round(s/86400)} Tagen`; }
+function inZeit(ts){ if(!ts) return '–'; const s = Math.round(ts - Date.now()/1000);
+  if (s <= 0) return 'gleich'; if (s < 60) return `in ${s} s`; return `in ${Math.round(s/60)} Min.`; }
+const uhr = ts => new Date(ts*1000).toLocaleString('de-DE', {day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit'});
+function toast(t){ const el = $('#toast'); el.textContent = t; el.classList.add('an'); clearTimeout(toast.t); toast.t = setTimeout(() => el.classList.remove('an'), 3200); }
+let CLOUD = null;  // gesetzt, wenn die Seite als Cloud-Ansicht (GitHub Pages) mit fertigen Daten läuft
+async function api(pfad, daten){
+  const rel = pfad.replace(/^\//, '');
+  if (CLOUD){
+    if (daten !== undefined) throw new Error('In der Cloud-Ansicht nicht möglich');
+    const r = await fetch(rel + '.json', {cache: 'no-store'});
+    if (!r.ok) throw new Error('Daten fehlen (' + r.status + ')'); return r.json();
+  }
+  const opt = {headers:{'X-Schluessel':K}};
+  if (daten !== undefined){ opt.method = 'POST'; opt.headers['Content-Type'] = 'application/json'; opt.headers['X-TarsPokeWaechter'] = '1'; opt.body = JSON.stringify(daten); }
+  const r = await fetch(rel + (K ? (rel.includes('?') ? '&' : '?') + 'k=' + encodeURIComponent(K) : ''), opt);
+  const j = await r.json(); if (!r.ok) throw new Error(j.fehler || r.status); return j;
+}
+async function cloudErkennen(){
+  try {
+    const r = await fetch('api/modus.json', {cache: 'no-store'});
+    if (r.ok){ const m = await r.json(); if (m.statisch) CLOUD = m; }
+  } catch (e) {}
+  if (CLOUD) document.body.classList.add('cloud');
+}
+
+document.querySelectorAll('#tabs button').forEach(b => b.onclick = () => {
+  document.querySelectorAll('#tabs button').forEach(x => x.classList.toggle('an', x === b));
+  document.querySelectorAll('.seite').forEach(s => s.classList.toggle('an', s.id === b.dataset.seite));
+  try { localStorage.setItem('pw_tab', b.dataset.seite); } catch(e) {}
+});
+try { const t = localStorage.getItem('pw_tab'); if (t) document.querySelector(`#tabs button[data-seite="${t}"]`)?.click(); } catch(e) {}
+
+function chipUmschalten(label, input){ label.onclick = e => { e.preventDefault(); input.checked = !input.checked; label.classList.toggle('an', input.checked); zeigeProdukte(); }; }
+chipUmschalten($('#chipGrenze'), $('#nurGrenze'));
+chipUmschalten($('#chipAus'), $('#auchAus'));
+chipUmschalten($('#chipMp'), $('#auchMp'));
+$('#suche').oninput = () => zeigeProdukte();
+document.querySelectorAll('[data-ef]').forEach(c => c.onclick = () => {
+  efNur = c.dataset.ef === 'gemeldet';
+  document.querySelectorAll('[data-ef]').forEach(x => x.classList.toggle('an', x === c)); zeigeEreignisse();
+});
+
+function filterChips(ziel, werte, menge, namen){
+  ziel.innerHTML = werte.map(w => `<span class="chip ${menge.has(w) ? 'an' : ''}" data-w="${esc(w)}">${esc(namen[w] || w)}</span>`).join('');
+  ziel.querySelectorAll('.chip').forEach(c => c.onclick = () => { const w = c.dataset.w; menge.has(w) ? menge.delete(w) : menge.add(w); c.classList.toggle('an'); zeigeProdukte(); });
+}
+
+function zeigeProdukte(){
+  const q = $('#suche').value.trim().toLowerCase();
+  const auchAus = $('#auchAus').checked, nurGrenze = $('#nurGrenze').checked;
+  const istMp = p => (p.haendler || '').startsWith('Marktplatz');
+  let l = P.filter(p => (p.shop_aktiv || p.merkliste) && ($('#auchMp').checked || !istMp(p)));
+  const verf = l.filter(p => ['lieferbar','knapp','vorbestellbar'].includes(p.status));
+  $('#zVerf').textContent = verf.filter(passtZuMir).length;
+  if (!auchAus) l = verf;
+  const sf = $('#setFilter').value || 'alle';
+  if (sf === 'meine') l = l.filter(setPasst);
+  else if (sf === 'ohne') l = l.filter(p => !p.set_id);
+  else if (sf !== 'alle') l = l.filter(p => p.set_id === sf);
+  if (nurGrenze) l = l.filter(p => !p.ueber_grenze);
+  if (fSprache.size) l = l.filter(p => fSprache.has(p.sprache));
+  if (fArt.size) l = l.filter(p => fArt.has(p.art));
+  if (q) l = l.filter(p => (p.titel + ' ' + p.shopname).toLowerCase().includes(q));
+  const rang = {lieferbar:0, knapp:0, vorbestellbar:1, unbekannt:2, ausverkauft:3};
+  l.sort((a, b) => (rang[a.status] - rang[b.status]) || (a.ueber_grenze - b.ueber_grenze) || (b.status_seit - a.status_seit));
+  const box = $('#produkte');
+  if (!l.length){ box.innerHTML = `<div class="leer">Gerade nichts, das zu deinen Filtern passt. Der Wächter meldet sich, sobald sich etwas tut.</div>`; return; }
+  box.innerHTML = l.slice(0, 400).map(p => `
+    <article class="karte">
+      ${p.bild ? `<img loading="lazy" src="${esc(klein(p.bild))}" alt="">` : `<div class="ohnebild">🃏</div>`}
+      <div class="inhalt">
+        <div class="titel">${esc(p.titel)}</div>
+        <div class="meta"><span class="badge b-${p.status}">${STATUS[p.status] || p.status}</span>
+          ${p.set_id ? `<span class="setbadge">${esc(SETNAMEN[p.set_id] || p.set_id)}</span>` : ''}
+          <span class="badge">${esc(p.sprache)}</span><span>${esc(Z.art_namen[p.art] || p.art)}</span>
+          ${p.haendler ? `<span class="badge">${esc(p.haendler)}</span>` : ''}</div>
+        <div class="zeile-unten">
+          <div><span class="preis ${p.ueber_grenze ? 'hoch' : ''}" title="${p.ueber_grenze ? 'über deiner Preisgrenze' : ''}">${euro(p.preis)}</span>
+            <span class="meta">· ${esc(p.shopname)} · seit ${vor(p.status_seit).replace('vor ', '')}</span></div>
+          <a class="knopf haupt" href="${esc(p.url)}" target="_blank" rel="noopener">Zum Shop</a>
+        </div>
+      </div>
+    </article>`).join('');
+}
+
+// Passt ein Produkt zu deiner Set- und Artauswahl (wie beim Melden)?
+function setPasst(p){
+  if (!EIN || !EIN.sets.length) return true;
+  return p.set_id ? EIN.sets.includes(p.set_id) : EIN.set_unbekannt_melden;
+}
+function passtZuMir(p){
+  if (!EIN) return true;
+  if (p.merkliste) return true;
+  return !p.ueber_grenze && EIN.sprachen.includes(p.sprache) && setPasst(p) && (!EIN.arten.length || EIN.arten.includes(p.art));
+}
+
+function fuelleSetFilter(){
+  const sel = $('#setFilter');
+  const meine = EIN && EIN.sets.length;
+  const alt = sel.value || (meine ? 'meine' : 'alle');
+  let h = '<option value="alle">Alle Sets</option>';
+  if (meine) h += `<option value="meine">Meine Sets (${EIN.sets.length})</option>`;
+  for (const r of SETS.reihen){
+    const mitWare = r.sets.filter(s => s.gesamt);
+    if (!mitWare.length) continue;
+    h += `<optgroup label="${esc(r.name)}">` + mitWare.map(s => `<option value="${esc(s.id)}">${esc(s.de)}${s.verfuegbar ? ` (${s.verfuegbar} bestellbar)` : ''}</option>`).join('') + '</optgroup>';
+  }
+  h += '<option value="ohne">Ohne festes Set</option>';
+  sel.innerHTML = h;
+  sel.value = [...sel.options].some(o => o.value === alt) ? alt : 'alle';
+}
+$('#setFilter').onchange = () => zeigeProdukte();
+
+const kurzId = name => 'eigen_' + name.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_+|_+$/g, '');
+let auswahlGeaendert = false;
+function auswahlText(){
+  const name = id => SETNAMEN[id] || (EIN.eigene_sets || []).find(e => e.id === id)?.name || id;
+  return JSON.stringify({
+    _hilfe: 'Deine Set-Auswahl für den Cloud-Wächter. Am einfachsten auf der Statusseite im Reiter „Meine Sets“ anklicken und hierher kopieren.',
+    sets: EIN.sets.map(name),
+    reihen: [],
+    produkte_ohne_set_melden: !!EIN.set_unbekannt_melden,
+    produktarten: EIN.arten.map(a => Z.art_namen[a] || a),
+    eigene_sets: (EIN.eigene_sets || []).map(e => ({name: e.name, suchworte: e.suchworte})),
+  }, null, 2) + '\n';
+}
+function zeigeCloudAuswahl(){
+  if (!CLOUD) return;
+  $('#cloudBearbeiten').href = CLOUD.auswahl_bearbeiten || CLOUD.repo_url || '#';
+  $('#cloudAuswahlStatus').innerHTML = auswahlGeaendert
+    ? '<b style="color:var(--rot)">Du hast die Auswahl geändert – noch nicht in die Cloud übernommen.</b>'
+    : 'Das hier ist die Auswahl, mit der die Cloud gerade arbeitet.';
+}
+$('#cloudKopieren').onclick = async () => {
+  try { await navigator.clipboard.writeText(auswahlText()); toast('Kopiert ✓ – jetzt „auswahl.json bearbeiten“'); }
+  catch (e) { prompt('Bitte diesen Text kopieren:', auswahlText()); }
+};
+
+async function speichereAuswahl(patch){
+  if (CLOUD){
+    if (patch.eigene_sets) patch.eigene_sets = patch.eigene_sets.map(e => ({...e, id: e.id || kurzId(e.name)}));
+    Object.assign(EIN, patch);
+    if ('sets' in patch) $('#setFilter').value = '';
+    auswahlGeaendert = true;
+    zeigeSets(); fuelleSetFilter(); zeigeProdukte(); zeigeCloudAuswahl();
+    toast('Geändert – unten in die Cloud übernehmen');
+    return;
+  }
+  try {
+    EIN = await api('/api/einstellungen', patch);
+    if ('sets' in patch) $('#setFilter').value = '';  // Filter springt auf „Meine Sets“ bzw. „Alle Sets“
+    await ladeSets();
+    zeigeSets(); fuelleSetFilter(); zeigeProdukte(); toast('Gespeichert ✓');
+  } catch (err) { toast('Fehler: ' + err.message); }
+}
+async function ladeSets(){
+  SETS = await api('/api/sets');
+  SETNAMEN = {}; SETS.reihen.forEach(r => r.sets.forEach(s => SETNAMEN[s.id] = s.de));
+}
+
+function zeigeSets(){
+  if (!EIN) return;
+  const g = new Set(EIN.sets), n = g.size;
+  $('#setsZusammenfassung').textContent = n
+    ? `${n} ${n === 1 ? 'Set' : 'Sets'} ausgewählt` + (EIN.set_unbekannt_melden ? ' + Produkte ohne festes Set' : '')
+    : 'Keine Auswahl – alle Sets werden gemeldet';
+  $('#setsLeeren').disabled = !n;
+  let h = '';
+  SETS.reihen.forEach((r, i) => {
+    const verf = r.sets.reduce((a, s) => a + s.verfuegbar, 0);
+    const alle = r.sets.every(s => g.has(s.id));
+    h += `<div class="feld"><label class="reihenkopf"><input type="checkbox" data-reihe="${i}" ${alle ? 'checked' : ''}>
+        <b>${esc(r.name)}</b> <span class="hinweis">${esc(r.jahre || '')}${r.sets.length > 1 ? ' · ganze Reihe' : ''}</span>
+        ${verf ? `<span class="badge b-lieferbar">${verf} bestellbar</span>` : ''}</label>
+      <div class="setraster">` + r.sets.map(s => `<label class="setzeile">
+        <input type="checkbox" data-set="${esc(s.id)}" ${g.has(s.id) ? 'checked' : ''}>
+        <span class="name"><b>${esc(s.de)}</b><br><span class="hinweis">${esc([s.en && s.en !== s.de ? s.en : '', s.code].filter(Boolean).join(' · '))}</span></span>
+        ${s.verfuegbar ? `<span class="badge b-lieferbar" title="gerade bestellbar">${s.verfuegbar}</span>` : ''}</label>`).join('') + '</div></div>';
+  });
+  const o = SETS.ohne_set || {verfuegbar: 0};
+  h += `<div class="feld"><label class="setzeile" style="border:0;padding:0;background:none">
+      <input type="checkbox" id="ohneSet" ${EIN.set_unbekannt_melden ? 'checked' : ''}>
+      <span class="name"><b>Produkte ohne festes Set</b><br><span class="hinweis">Kollektionen, Tins, Blister, „Erste Partner“ und andere Specials, die zu keinem einzelnen Set gehören. Wirkt nur, wenn oben Sets ausgewählt sind.</span></span>
+      ${o.verfuegbar ? `<span class="badge b-lieferbar">${o.verfuegbar}</span>` : ''}</label></div>`;
+  $('#setReihen').innerHTML = h;
+  SETS.reihen.forEach((r, i) => {
+    const an = r.sets.filter(s => g.has(s.id)).length;
+    document.querySelector(`[data-reihe="${i}"]`).indeterminate = an > 0 && an < r.sets.length;
+  });
+  document.querySelectorAll('[data-set]').forEach(cb => cb.onchange = () => {
+    const s = new Set(EIN.sets); cb.checked ? s.add(cb.dataset.set) : s.delete(cb.dataset.set); speichereAuswahl({sets: [...s]}); });
+  document.querySelectorAll('[data-reihe]').forEach(cb => cb.onchange = () => {
+    const s = new Set(EIN.sets); SETS.reihen[cb.dataset.reihe].sets.forEach(x => cb.checked ? s.add(x.id) : s.delete(x.id)); speichereAuswahl({sets: [...s]}); });
+  $('#ohneSet').onchange = e => speichereAuswahl({set_unbekannt_melden: e.target.checked});
+  $('#artWahl').innerHTML = Object.entries(Z.art_namen).map(([k, t]) => `<span class="chip ${EIN.arten.includes(k) ? 'an' : ''}" data-artw="${k}">${esc(t)}</span>`).join('');
+  document.querySelectorAll('[data-artw]').forEach(c => c.onclick = () => {
+    const s = new Set(EIN.arten); s.has(c.dataset.artw) ? s.delete(c.dataset.artw) : s.add(c.dataset.artw); speichereAuswahl({arten: [...s]}); });
+  $('#esListe').innerHTML = (EIN.eigene_sets || []).map(e => `<div class="eintrag"><div class="mitte"><b>${esc(e.name)}</b>
+    <div class="hinweis">Suchworte: ${esc(e.suchworte)}</div></div><button data-esweg="${esc(e.id)}">Entfernen</button></div>`).join('');
+  document.querySelectorAll('[data-esweg]').forEach(b => b.onclick = () => speichereAuswahl({
+    eigene_sets: EIN.eigene_sets.filter(e => e.id !== b.dataset.esweg), sets: EIN.sets.filter(s => s !== b.dataset.esweg)}));
+}
+$('#setsLeeren').onclick = () => speichereAuswahl({sets: []});
+$('#esHinzu').onclick = async () => {
+  const name = $('#esName').value.trim(), worte = $('#esWorte').value.trim();
+  if (!name || !worte){ toast('Bitte Name und Suchworte eingeben'); return; }
+  const vorher = new Set((EIN.eigene_sets || []).map(e => e.id));
+  await speichereAuswahl({eigene_sets: [...(EIN.eigene_sets || []), {name, suchworte: worte}]});
+  const neu = (EIN.eigene_sets || []).find(e => !vorher.has(e.id));
+  if (neu) await speichereAuswahl({sets: [...EIN.sets, neu.id]});
+  $('#esName').value = ''; $('#esWorte').value = '';
+};
+
+function zeigeEreignisse(){
+  const l = E.filter(e => !efNur || e.gemeldet);
+  const box = $('#ereignisse');
+  if (!l.length){ box.innerHTML = `<div class="leer">Noch keine Änderungen erkannt. Beim ersten Durchlauf merkt sich der Wächter nur den Ist-Zustand – gemeldet wird ab dem nächsten Restock.</div>`; return; }
+  box.innerHTML = l.map(e => { const [sym, name] = EREIGNIS[e.art] || ['•', e.art];
+    return `<div class="eintrag"><div class="zeit">${uhr(e.zeit)}</div><div class="symbol">${sym}</div>
+      <div class="mitte"><div><b>${name}:</b> <a href="${esc(e.url)}" target="_blank" rel="noopener">${esc(e.titel)}</a></div>
+      <div class="meta">${esc(shopName(e.shop))} · ${euro(e.preis)} · ${esc(e.sprache)} ·
+      ${e.gemeldet ? '<span class="badge b-lieferbar">gesendet</span>' : `<span class="grund">nicht gesendet: ${esc(e.grund)}</span>`}</div></div></div>`; }).join('');
+}
+const shopName = id => (Z.shops || []).find(s => s.id === id)?.name || id;
+
+function zeigeReleases(r){
+  const box = $('#releases'); let monat = '', html = '';
+  const ab = r.filter(x => x.tage_bis >= -30);
+  for (const x of ab){
+    const d = new Date(x.datum + 'T00:00:00');
+    const m = d.toLocaleDateString('de-DE', {month:'long', year:'numeric'});
+    if (m !== monat){ html += `<div class="monat">${m}</div>`; monat = m; }
+    const cd = x.tage_bis > 1 ? `in ${x.tage_bis} Tagen` : x.tage_bis === 1 ? 'morgen' : x.tage_bis === 0 ? 'heute!' : `vor ${-x.tage_bis} Tagen`;
+    html += `<div class="eintrag ${x.tage_bis < 0 ? 'vorbei' : ''}" style="margin-bottom:8px">
+      <div class="zeit">${d.toLocaleDateString('de-DE', {weekday:'short', day:'2-digit', month:'2-digit'})}</div>
+      <div class="mitte"><div><b>${esc(x.name)}</b> <span class="badge">${esc(x.sprache)}</span> <span class="badge">${esc(x.art)}</span></div>
+      <div class="meta">${esc(x.produkte || '')}</div></div>
+      <div class="countdown ${x.tage_bis >= 0 && x.tage_bis <= 7 ? 'bald' : ''}">${cd}</div></div>`;
+  }
+  box.innerHTML = html || '<div class="leer">Keine Termine eingetragen.</div>';
+  $('#termineHinweis').innerHTML = 'Erinnerung kommt 7 Tage vorher, 1 Tag vorher und am Erscheinungstag. Termine ergänzen: <code>releases.json</code> im Programmordner.';
+}
+
+function zeigeNews(n){
+  const box = $('#newsliste');
+  if (!n.length){ box.innerHTML = '<div class="leer">Noch keine News geladen.</div>'; return; }
+  box.innerHTML = n.map(x => `<div class="eintrag"><div class="zeit">${uhr(x.zeit)}</div><div class="symbol">${x.treffer ? '📰' : '·'}</div>
+    <div class="mitte"><div style="${x.treffer ? 'font-weight:600' : ''}"><a href="${esc(x.link)}" target="_blank" rel="noopener">${esc(x.titel)}</a></div>
+    <div class="meta">${esc(x.quelle)}${x.gemeldet ? ' · <span class="badge b-lieferbar">gesendet</span>' : ''}</div></div></div>`).join('');
+}
+
+function zeigeShops(){
+  const ruf = {bekannt:'bekannter Händler', fachhandel:'TCG-Fachhandel', ungeprueft:'Ruf nicht geprüft', 'eigene Links':'eigene Links'};
+  $('#shoptabelle').innerHTML = `<tr><th>An</th><th>Shop</th><th>Zustand</th><th>Produkte</th><th>Zuletzt</th><th>Nächste</th></tr>` +
+    Z.shops.map(s => `<tr><td>${s.id === 'merkliste' ? '' : `<input type="checkbox" data-shop="${esc(s.id)}" ${s.aktiv ? 'checked' : ''} ${CLOUD ? 'disabled title="In der Cloud über einstellungen.json"' : ''}>`}</td>
+      <td><b>${s.basis ? `<a href="${esc(s.basis)}" target="_blank" rel="noopener">${esc(s.name)}</a>` : esc(s.name)}</b><br><span class="hinweis">${esc(ruf[s.ruf] || s.ruf)}</span></td>
+      <td><span class="punkt ${s.ok === 1 ? '' : s.ok === 2 ? 'warn' : s.ok === 0 ? 'aus' : 'warn'}"></span> ${esc(s.meldung || (s.aktiv ? 'wartet auf ersten Lauf' : 'aus'))}</td>
+      <td>${s.relevant ?? 0}</td><td>${vor(s.zuletzt)}</td><td>${s.aktiv ? inZeit(s.naechster) : '–'}</td></tr>`).join('');
+  document.querySelectorAll('[data-shop]').forEach(c => c.onchange = async () => {
+    await api('/api/einstellungen', {shops_aktiv: {[c.dataset.shop]: c.checked}}); toast(c.checked ? 'Shop eingeschaltet' : 'Shop ausgeschaltet'); laden();
+  });
+  $('#manuell').innerHTML = Z.manuell.map(m => `<div class="eintrag"><div class="symbol">🔗</div><div class="mitte">
+    <div><a href="${esc(m.url)}" target="_blank" rel="noopener"><b>${esc(m.name)}</b></a></div><div class="grund">${esc(m.grund)}</div></div></div>`).join('');
+  $('#merkliste').innerHTML = (Z.merkliste || []).map(m => `<div class="eintrag"><div class="mitte"><a href="${esc(m.url)}" target="_blank" rel="noopener">${esc(m.name || m.url)}</a></div>
+    ${CLOUD ? '' : `<button data-weg="${esc(m.url)}">Entfernen</button>`}</div>`).join('');
+  document.querySelectorAll('[data-weg]').forEach(b => b.onclick = async () => { await api('/api/merkliste', {aktion:'weg', url:b.dataset.weg}); toast('Entfernt'); laden(); });
+}
+
+function zeigeStatus(){
+  const aktiv = Z.shops.filter(s => s.aktiv), ok = aktiv.filter(s => s.ok === 1).length;
+  const zuletzt = Math.max(0, ...aktiv.map(s => s.zuletzt || 0));
+  $('#status').innerHTML = `<span class="punkt ${ok === aktiv.length ? '' : ok ? 'warn' : 'aus'}"></span> ${CLOUD ? '<span class="wolke">☁️ Cloud</span> ' : ''}${ok}/${aktiv.length} Shops ok · letzte Prüfung ${vor(zuletzt || null)}`;
+}
+
+function zeigeCloudEinstellungen(){
+  const e = EIN, g = e.preisgrenzen || {};
+  const grenzen = Object.entries(g).map(([k, v]) => `${esc(Z.art_namen[k] || k)} ${v} €`).join(' · ');
+  const hinweise = (CLOUD.hinweise || []).map(h => `<li>${esc(h)}</li>`).join('');
+  $('#cloudEinstellungen').innerHTML = `
+    <div class="feld"><h3>☁️ Läuft in der Cloud</h3>
+      <p>Der Wächter läuft auf GitHub, etwa alle 10 Minuten – dein PC kann aus bleiben. Stand dieser Seite: <b>${vor(CLOUD.erzeugt)}</b>.</p>
+      <p>Push aufs Handy: ${CLOUD.push_aktiv ? '<span class="badge b-lieferbar">aktiv</span> über die ntfy-App (dein Thema steht aus Sicherheitsgründen nicht auf dieser öffentlichen Seite).' : '<span class="badge b-ausverkauft">aus</span> – auf GitHub fehlt das Geheimnis <code>NTFY_THEMA</code>.'}</p>
+      ${CLOUD.laeufe_url ? `<a class="knopf" href="${esc(CLOUD.laeufe_url)}" target="_blank" rel="noopener">Läufe auf GitHub ansehen</a>` : ''}
+    </div>
+    ${hinweise ? `<div class="feld"><h3>⚠️ Bitte prüfen</h3><ul>${hinweise}</ul></div>` : ''}
+    <div class="feld"><h3>Einstellungen ändern</h3>
+      <p class="hinweis">Sprachen, Preisgrenzen, Shops an/aus, eigene Produktlinks (Merkliste), Ruhezeit und was gemeldet wird, stehen in <code>einstellungen.json</code>. Deine Sets wählst du bequemer im Reiter „Meine Sets“.</p>
+      ${CLOUD.einstellungen_bearbeiten ? `<a class="knopf haupt" href="${esc(CLOUD.einstellungen_bearbeiten)}" target="_blank" rel="noopener">einstellungen.json bearbeiten</a>` : ''}
+      <p><b>Aktuell:</b> Sprachen ${esc(e.sprachen.join(', '))} · Marktplatz-Händler ${e.marktplatz_ignorieren ? 'ignoriert' : 'erlaubt'} ·
+        Abklingzeit ${esc(e.abklingzeit_min)} Min.${e.ruhezeit && e.ruhezeit.aktiv ? ` · Ruhezeit ${esc(e.ruhezeit.von)}–${esc(e.ruhezeit.bis)}` : ''}</p>
+      <p class="hinweis">Preisgrenzen${e.preisgrenze_aktiv ? '' : ' (aus)'}: ${grenzen}</p>
+    </div>
+    <div class="feld"><h3>📲 Wie eine App aufs Handy</h3>
+      <p class="hinweis"><b>iPhone:</b> Diese Seite in Safari öffnen → Teilen-Symbol → „Zum Home-Bildschirm“.<br>
+      <b>Android:</b> In Chrome öffnen → Menü ⋮ → „Zum Startbildschirm hinzufügen“.<br>
+      Die Pushes kommen weiterhin über die ntfy-App.</p>
+    </div>`;
+}
+
+let qrGemacht = '';
+function zeigeEinstellungen(){
+  const e = EIN, b = e.benachrichtigung, n = b.ntfy;
+  $('#ntfyThema').textContent = n.thema; $('#ntfyAktiv').checked = n.aktiv; $('#ntfyBilder').checked = n.bilder !== false;
+  const abo = `${(n.server || 'https://ntfy.sh').replace(/\/$/, '')}/${n.thema}`;
+  if (window.QRCode && qrGemacht !== abo){ $('#qr').innerHTML = ''; new QRCode($('#qr'), {text: abo, width: 148, height: 148}); qrGemacht = abo; }
+  const arten = {wieder_da:'Wieder da (Restock)', neu_bestellbar:'Neu & bestellbar', vorverkauf:'Vorverkauf offen', neu_gelistet:'Neu gelistet (bald erhältlich)', preis_runter:'Preis gesenkt', news:'News & Deals', releases:'Release-Erinnerungen'};
+  $('#eArten').innerHTML = Object.entries(arten).map(([k, t]) => `<label><input type="checkbox" data-art="${k}" ${e.melden[k] ? 'checked' : ''}> ${t}</label>`).join('');
+  $('#eSprachen').innerHTML = '<span class="hinweis">Sprachen:</span>' + Object.entries(SPRACHEN).map(([k, t]) => `<label><input type="checkbox" data-sp="${k}" ${e.sprachen.includes(k) ? 'checked' : ''}> ${t}</label>`).join('');
+  $('#marktplatz').checked = e.marktplatz_ignorieren;
+  $('#pflicht').value = (e.stichworte_pflicht || []).join(', '); $('#sperre').value = (e.stichworte_sperre || []).join(', ');
+  $('#grenzeAktiv').checked = e.preisgrenze_aktiv;
+  $('#grenzen').innerHTML = Object.entries(e.preisgrenzen).map(([k, v]) => `<label>${esc(Z.art_namen[k] || k)} <input type="number" min="0" step="1" data-gr="${k}" value="${v}"></label>`).join('');
+  $('#intervall').value = e.intervall_min; $('#abkling').value = e.abklingzeit_min;
+  $('#ruheAktiv').checked = b.ruhezeit.aktiv; $('#ruheVon').value = b.ruhezeit.von; $('#ruheBis').value = b.ruhezeit.bis;
+  $('#winAktiv').checked = b.windows.aktiv;
+  $('#tgAktiv').checked = b.telegram.aktiv; $('#tgToken').value = b.telegram.bot_token; $('#tgChat').value = b.telegram.chat_id;
+  $('#dcAktiv').checked = b.discord.aktiv; $('#dcHook').value = b.discord.webhook;
+  $('#wlan').checked = e.im_wlan;
+  $('#wlanUrl').innerHTML = Z.wlan.aktiv ? `Auf dem Handy öffnen: <code>${esc(Z.wlan.url)}</code><br>Beim ersten Start fragt Windows, ob Python im privaten Netzwerk erreichbar sein darf – „Zulassen“ wählen.` : 'Push-Nachrichten kommen auch ohne diese Freigabe überall an. Die Freigabe ist nur für die Übersicht auf dem Handy.';
+}
+const liste = s => s.split(',').map(x => x.trim()).filter(Boolean);
+$('#speichern').onclick = async () => {
+  const melden = {}; document.querySelectorAll('[data-art]').forEach(c => melden[c.dataset.art] = c.checked);
+  const sprachen = [...document.querySelectorAll('[data-sp]')].filter(c => c.checked).map(c => c.dataset.sp);
+  const preisgrenzen = {}; document.querySelectorAll('[data-gr]').forEach(i => preisgrenzen[i.dataset.gr] = Number(i.value) || 0);
+  try {
+    EIN = await api('/api/einstellungen', {
+      melden, sprachen, preisgrenzen, preisgrenze_aktiv: $('#grenzeAktiv').checked, marktplatz_ignorieren: $('#marktplatz').checked,
+      stichworte_pflicht: liste($('#pflicht').value), stichworte_sperre: liste($('#sperre').value),
+      intervall_min: Number($('#intervall').value) || 4, abklingzeit_min: Number($('#abkling').value) || 0, im_wlan: $('#wlan').checked,
+      benachrichtigung: {ntfy: {aktiv: $('#ntfyAktiv').checked, bilder: $('#ntfyBilder').checked},
+        windows: {aktiv: $('#winAktiv').checked},
+        ruhezeit: {aktiv: $('#ruheAktiv').checked, von: $('#ruheVon').value || '23:00', bis: $('#ruheBis').value || '07:00'},
+        telegram: {aktiv: $('#tgAktiv').checked, bot_token: $('#tgToken').value.trim(), chat_id: $('#tgChat').value.trim()},
+        discord: {aktiv: $('#dcAktiv').checked, webhook: $('#dcHook').value.trim()}}
+    });
+    toast('Gespeichert ✓'); zeigeEinstellungen(); laden();
+  } catch (err) { toast('Fehler: ' + err.message); }
+};
+$('#kopieren').onclick = () => { navigator.clipboard?.writeText($('#ntfyThema').textContent); toast('Thema kopiert'); };
+async function testPush(){
+  try { const r = await api('/api/test', {});
+    toast(r.ergebnisse.map(x => `${x.kanal}: ${x.ok ? 'OK' : 'Fehler'}`).join(' · ') || 'Kein Kanal aktiv');
+  } catch (err) { toast('Fehler: ' + err.message); } }
+$('#btnTest').onclick = testPush; $('#btnTest2').onclick = testPush;
+$('#btnPruefen').onclick = async () => { $('#btnPruefen').disabled = true; await api('/api/pruefen', {}); toast('Alle Shops werden jetzt geprüft …');
+  setTimeout(() => { $('#btnPruefen').disabled = false; laden(); }, 8000); };
+$('#mlHinzu').onclick = async () => {
+  try { await api('/api/merkliste', {aktion:'hinzu', url: $('#mlUrl').value, name: $('#mlName').value});
+    $('#mlUrl').value = ''; $('#mlName').value = ''; toast('Wird beobachtet'); laden(); } catch (err) { toast(err.message); } };
+
+async function laden(){
+  try {
+    const [z, p, e, r, n] = await Promise.all([api('/api/zustand'), api('/api/produkte'), api('/api/ereignisse'), api('/api/releases'), api('/api/news')]);
+    Z = z; P = p; E = e;
+    if (CLOUD){
+      CLOUD = {...(await api('/api/modus')), statisch: true};
+      if (!EIN || !auswahlGeaendert){ const neu = await api('/api/einstellungen'); if (!EIN) neu.sprachen.forEach(s => fSprache.add(s)); EIN = neu; }
+      zeigeCloudEinstellungen(); zeigeCloudAuswahl();
+    } else if (!EIN) { EIN = await api('/api/einstellungen'); EIN.sprachen.forEach(s => fSprache.add(s)); zeigeEinstellungen(); }
+    await ladeSets(); fuelleSetFilter();
+    const fokus = document.activeElement;
+    if (!fokus || !document.querySelector('#sets').contains(fokus) || fokus.type === 'checkbox') zeigeSets();
+    filterChips($('#filterSprache'), Object.keys(SPRACHEN).filter(s => P.some(x => x.sprache === s)), fSprache, SPRACHEN);
+    filterChips($('#filterArt'), Object.keys(Z.art_namen).filter(a => P.some(x => x.art === a)), fArt, Z.art_namen);
+    zeigeStatus(); zeigeProdukte(); zeigeEreignisse(); zeigeReleases(r); zeigeNews(n); zeigeShops();
+  } catch (err) { $('#status').innerHTML = `<span class="punkt aus"></span> Wächter nicht erreichbar (${esc(err.message)})`; }
+}
+cloudErkennen().then(() => { laden(); setInterval(laden, CLOUD ? 60000 : 30000); });
+</script>
+</body>
+</html>

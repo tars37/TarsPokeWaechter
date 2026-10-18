@@ -1,0 +1,84 @@
+name: TarsPokeWächter
+
+on:
+  schedule:
+    - cron: "*/10 * * * *"   # etwa alle 10 Minuten (GitHub startet geplante Läufe nicht minutengenau)
+  workflow_dispatch:          # „Run workflow“-Knopf für einen Lauf von Hand
+  push:
+    branches: [main]
+    paths:                    # geänderte Einstellungen sofort übernehmen
+      - "auswahl.json"
+      - "einstellungen.json"
+      - "sets.json"
+      - "releases.json"
+      - "**.py"
+      - "web/**"
+      - ".github/workflows/waechter.yml"
+
+permissions:
+  contents: write   # nur für das Lebenszeichen alle ~45 Tage
+  pages: write
+  id-token: write
+
+concurrency:
+  group: waechter
+  cancel-in-progress: false
+
+jobs:
+  pruefen:
+    runs-on: ubuntu-latest
+    timeout-minutes: 9
+    environment:
+      name: github-pages
+      url: ${{ steps.seite.outputs.page_url }}
+    env:
+      TZ: Europe/Berlin
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Gemerkten Zustand laden
+        uses: actions/cache/restore@v4
+        with:
+          path: zustand
+          key: zustand-${{ github.run_id }}-${{ github.run_attempt }}
+          restore-keys: zustand-
+
+      - name: Shops prüfen und melden
+        env:
+          NTFY_THEMA: ${{ secrets.NTFY_THEMA }}
+          NTFY_SERVER: ${{ vars.NTFY_SERVER }}
+        run: python cloud_lauf.py
+
+      - name: Zustand merken
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: zustand
+          key: zustand-${{ github.run_id }}-${{ github.run_attempt }}
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: site
+
+      - name: Statusseite veröffentlichen
+        id: seite
+        uses: actions/deploy-pages@v4
+
+      - name: Lebenszeichen (sonst schaltet GitHub den Zeitplan nach 60 Tagen ohne Änderung ab)
+        if: github.event_name == 'schedule'
+        run: |
+          letzte=$(git log -1 --format=%ct)
+          if [ $(( $(date +%s) - letzte )) -gt $(( 45 * 86400 )) ]; then
+            date +%F > lebenszeichen.txt
+            git config user.name "TarsPokeWächter"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add lebenszeichen.txt
+            git commit -m "Lebenszeichen"
+            git push
+          fi

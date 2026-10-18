@@ -1,0 +1,58 @@
+{
+  "_hilfe": "Einstellungen für den Cloud-Wächter. Ändern: oben rechts auf den Stift tippen, Werte anpassen, dann 'Commit changes'. Nach dem Speichern startet sofort ein Lauf. Text steht in Anführungszeichen, zwischen Einträgen steht ein Komma. Deine Sets wählst du auf der Statusseite im Reiter 'Meine Sets' (Datei auswahl.json).",
+
+  "sprachen": ["DE", "EN", "?"],
+  "_sprachen_hilfe": "Möglich: DE, EN, JP, CN, KR, TH und ? (Sprache unbekannt)",
+
+  "preisgrenze_aktiv": true,
+  "preisgrenzen": {
+    "display": 230,
+    "display18": 130,
+    "minitin_display": 140,
+    "etb": 75,
+    "bundle": 50,
+    "blister": 25,
+    "tin": 35,
+    "deck": 40,
+    "kollektion": 160,
+    "booster": 8,
+    "sonstiges": 200
+  },
+  "_preisgrenzen_hilfe": "Höchstpreis in Euro je Produktart. Teurere Angebote werden nicht gemeldet (Schutz vor Scalper-Preisen). etb = Top-Trainer-Box.",
+
+  "marktplatz_ignorieren": true,
+  "abklingzeit_minuten": 60,
+  "pflicht_stichworte": [],
+  "sperr_stichworte": [],
+
+  "melden": {
+    "wieder_da": true,
+    "neu_bestellbar": true,
+    "vorverkauf": true,
+    "neu_gelistet": true,
+    "preis_runter": false,
+    "news": true,
+    "releases": true
+  },
+
+  "ruhezeit": {"aktiv": false, "von": "23:00", "bis": "07:00"},
+
+  "shops": {
+    "gate": true,
+    "cardcorner": true,
+    "tcgviert": true,
+    "cardcosmos": true,
+    "elbenwald": true,
+    "mueller": true,
+    "mediamarkt": true,
+    "proshop": true,
+    "spielemax": true,
+    "cardknights": false,
+    "pokitrio": false,
+    "shophotep": false
+  },
+  "_shops_hilfe": "true = wird überwacht, false = aus. Card Knights, Pokitrio und Shophotep sind kleine Shops, deren Ruf nicht geprüft ist.",
+
+  "merkliste": [],
+  "_merkliste_hilfe": "Eigene Produktlinks, z. B. [{\"url\": \"https://shop.de/produkt\", \"name\": \"Delta Display\"}]"
+}

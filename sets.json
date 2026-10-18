@@ -1,0 +1,91 @@
+{
+  "hinweis": "Sets nach Reihen. 'muster' sind Suchmuster (regulaere Ausdruecke, Gross/Klein egal) fuer Produktnamen. 'basis': true = Grundset der Reihe, wird nur erkannt, wenn kein genaueres Set passt. Neue Sets am besten oben in ihrer Reihe ergaenzen.",
+  "reihen": [
+    {
+      "name": "Mega-Entwicklung",
+      "jahre": "2025–2026",
+      "sets": [
+        {"id": "me06", "de": "Delta-Herrschaft", "en": "Delta Reign", "code": "ME06", "muster": ["delta[- ]?herrschaft", "delta reign", "\\bme ?0?6\\b"]},
+        {"id": "30jahre", "de": "30 Jahre", "en": "30th Celebration", "code": "M6a (JP)", "muster": ["30 jahre", "30th celebration", "\\bm6a\\b"]},
+        {"id": "me05", "de": "Dunkelnacht", "en": "Pitch Black", "code": "ME05", "muster": ["dunkelnacht", "pitch black", "\\bme ?0?5\\b"]},
+        {"id": "me04", "de": "Wachsendes Chaos", "en": "Chaos Rising", "code": "ME04", "muster": ["wachsendes chaos", "chaos rising", "\\bme ?0?4\\b"]},
+        {"id": "me03", "de": "Optimale Ordnung", "en": "Perfect Order", "code": "ME03", "muster": ["optimale ordnung", "perfect order", "\\bme ?0?3\\b"]},
+        {"id": "me025", "de": "Erhabene Helden", "en": "Ascended Heroes", "code": "ME2.5", "muster": ["erhabene helden", "ascended heroes", "\\bme ?0?2[.,]5\\b"]},
+        {"id": "me02", "de": "Fatale Flammen", "en": "Phantasmal Flames", "code": "ME02", "muster": ["fatale flammen", "phantasmal flames", "\\bme ?0?2\\b"]},
+        {"id": "me01", "de": "Mega-Entwicklung (Grundset)", "en": "Mega Evolution", "code": "ME01", "basis": true, "muster": ["mega[- ]?entwicklung", "mega evolution", "\\bme ?0?1\\b"]}
+      ]
+    },
+    {
+      "name": "Karmesin & Purpur",
+      "jahre": "2023–2025",
+      "sets": [
+        {"id": "sv105b", "de": "Schwarze Blitze", "en": "Black Bolt", "code": "SV10.5", "muster": ["schwarze blitze", "black bolt"]},
+        {"id": "sv105w", "de": "Weiße Flammen", "en": "White Flare", "code": "SV10.5", "muster": ["wei(ß|ss)e flammen", "white flare"]},
+        {"id": "sv10", "de": "Ewige Rivalen", "en": "Destined Rivals", "code": "SV10 / KP10", "muster": ["ewige rivalen", "destined rivals", "\\b(kp|sv) ?10\\b"]},
+        {"id": "sv09", "de": "Reisegefährten", "en": "Journey Together", "code": "SV09 / KP09", "muster": ["reisegef(ä|ae)hrten", "journey together", "\\b(kp|sv) ?0?9\\b"]},
+        {"id": "sv085", "de": "Prismatische Entwicklungen", "en": "Prismatic Evolutions", "code": "SV8.5", "muster": ["prismatische entwicklungen", "prismatic evolutions", "\\b(kp|sv) ?0?8[.,]5\\b"]},
+        {"id": "sv08", "de": "Stürmische Funken", "en": "Surging Sparks", "code": "SV08", "muster": ["st(ü|ue)rmische funken", "surging sparks", "\\b(kp|sv) ?0?8\\b"]},
+        {"id": "sv07", "de": "Stellarkrone", "en": "Stellar Crown", "code": "SV07", "muster": ["stellarkrone", "stellar crown", "\\b(kp|sv) ?0?7\\b"]},
+        {"id": "sv065", "de": "Nebel der Sagen", "en": "Shrouded Fable", "code": "SV6.5", "muster": ["nebel der sagen", "shrouded fable", "\\b(kp|sv) ?0?6[.,]5\\b"]},
+        {"id": "sv06", "de": "Maskerade im Zwielicht", "en": "Twilight Masquerade", "code": "SV06", "muster": ["maskerade im zwielicht", "twilight masquerade", "\\b(kp|sv) ?0?6\\b"]},
+        {"id": "sv05", "de": "Gewalten der Zeit", "en": "Temporal Forces", "code": "SV05", "muster": ["gewalten der zeit", "temporal forces", "\\b(kp|sv) ?0?5\\b"]},
+        {"id": "sv045", "de": "Paldeas Schicksale", "en": "Paldean Fates", "code": "SV4.5", "muster": ["paldeas schicksale", "paldean fates", "\\b(kp|sv) ?0?4[.,]5\\b"]},
+        {"id": "sv04", "de": "Paradoxrift", "en": "Paradox Rift", "code": "SV04", "muster": ["paradox ?rift", "\\b(kp|sv) ?0?4\\b"]},
+        {"id": "sv035", "de": "151", "en": "151", "code": "SV3.5", "muster": ["\\b151\\b", "\\b(kp|sv) ?0?3[.,]5\\b"]},
+        {"id": "sv03", "de": "Obsidianflammen", "en": "Obsidian Flames", "code": "SV03", "muster": ["obsidian ?flammen", "obsidian flames", "\\b(kp|sv) ?0?3\\b"]},
+        {"id": "sv02", "de": "Entwicklungen in Paldea", "en": "Paldea Evolved", "code": "SV02", "muster": ["entwicklungen in paldea", "paldea evolved", "\\b(kp|sv) ?0?2\\b"]},
+        {"id": "sv01", "de": "Karmesin & Purpur (Grundset)", "en": "Scarlet & Violet", "code": "SV01", "basis": true, "muster": ["karmesin (&|und) purpur", "scarlet (&|and) violet", "\\b(kp|sv) ?0?1\\b"]}
+      ]
+    },
+    {
+      "name": "Schwert & Schild",
+      "jahre": "2020–2023",
+      "sets": [
+        {"id": "swsh125", "de": "Zenit der Könige", "en": "Crown Zenith", "code": "SWSH12.5", "muster": ["zenit der k(ö|oe)nige", "crown zenith"]},
+        {"id": "swsh12", "de": "Silberne Sturmwinde", "en": "Silver Tempest", "code": "SWSH12", "muster": ["silberne sturmwinde", "silver tempest"]},
+        {"id": "swsh11", "de": "Verlorener Ursprung", "en": "Lost Origin", "code": "SWSH11", "muster": ["verlorener ursprung", "lost origin"]},
+        {"id": "pgo", "de": "Pokémon GO", "en": "Pokémon GO", "code": "PGO", "muster": ["pok[eé]mon[ :-]*go\\b", "\\bgo (top-?trainer|elite trainer|booster|display|premium|kollektion|collection|tin|blister)"]},
+        {"id": "swsh10", "de": "Astralglanz", "en": "Astral Radiance", "code": "SWSH10", "muster": ["astralglanz", "astral radiance"]},
+        {"id": "swsh09", "de": "Strahlende Sterne", "en": "Brilliant Stars", "code": "SWSH09", "muster": ["strahlende sterne", "brilliant stars"]},
+        {"id": "swsh08", "de": "Fusionsangriff", "en": "Fusion Strike", "code": "SWSH08", "muster": ["fusionsangriff", "fusion strike"]},
+        {"id": "cel25", "de": "Celebrations (25 Jahre)", "en": "Celebrations", "code": "CEL25", "muster": ["celebrations", "25 jahre", "25th anniversary"]},
+        {"id": "swsh07", "de": "Drachenwandel", "en": "Evolving Skies", "code": "SWSH07", "muster": ["drachenwandel", "evolving skies"]},
+        {"id": "swsh06", "de": "Schaurige Herrschaft", "en": "Chilling Reign", "code": "SWSH06", "muster": ["schaurige herrschaft", "chilling reign"]},
+        {"id": "swsh05", "de": "Kampfstile", "en": "Battle Styles", "code": "SWSH05", "muster": ["kampfstile", "battle styles"]},
+        {"id": "swsh45", "de": "Glänzendes Schicksal", "en": "Shining Fates", "code": "SWSH4.5", "muster": ["gl(ä|ae)nzendes schicksal", "shining fates"]},
+        {"id": "swsh04", "de": "Farbenschock", "en": "Vivid Voltage", "code": "SWSH04", "muster": ["farbenschock", "vivid voltage"]},
+        {"id": "swsh03", "de": "Flammende Finsternis", "en": "Darkness Ablaze", "code": "SWSH03", "muster": ["flammende finsternis", "darkness ablaze"]},
+        {"id": "swsh02", "de": "Clash der Rebellen", "en": "Rebel Clash", "code": "SWSH02", "muster": ["clash der rebellen", "rebel clash"]},
+        {"id": "swsh01", "de": "Schwert & Schild (Grundset)", "en": "Sword & Shield", "code": "SWSH01", "basis": true, "muster": ["schwert (&|und) schild", "sword (&|and) shield"]}
+      ]
+    },
+    {
+      "name": "Sonne & Mond und älter",
+      "jahre": "bis 2019",
+      "sets": [
+        {"id": "sm", "de": "Sonne & Mond und ältere Sets", "en": "Sun & Moon and older", "code": "SM/XY", "muster": ["sonne (&|und) mond", "sun (&|and) moon", "echo des donners", "lost thunder", "nacht in flammen", "burning shadows", "stunde der w(ä|ae)chter", "guardians rising", "welten im wandel", "cosmic eclipse", "ultra prisma", "ultra prism", "verborgenes schicksal", "hidden fates", "\\bxy\\b"]}
+      ]
+    },
+    {
+      "name": "Japanische Sets (Mega-Reihe)",
+      "jahre": "2025–2026",
+      "sets": [
+        {"id": "jp_m7", "de": "Aura Seeker", "en": "Aura Seeker", "code": "M7", "muster": ["aura seeker", "\\bm7\\b"]},
+        {"id": "jp_m6", "de": "Storm Emeralda", "en": "Storm Emeralda", "code": "M6", "muster": ["storm emeralda", "\\bm6\\b"]},
+        {"id": "jp_m5", "de": "Abyss Eye", "en": "Abyss Eye", "code": "M5", "muster": ["abyss eye", "\\bm5\\b"]},
+        {"id": "jp_m4", "de": "Ninja Spinner", "en": "Ninja Spinner", "code": "M4", "muster": ["ninja spinner", "\\bm4\\b"]},
+        {"id": "jp_m3", "de": "Munikis Zero", "en": "Munikis Zero", "code": "M3", "muster": ["munikis zero", "\\bm3\\b"]},
+        {"id": "jp_m2a", "de": "Mega Dream ex", "en": "Mega Dream ex", "code": "M2a", "muster": ["mega dream", "\\bm2a\\b"]},
+        {"id": "jp_m2", "de": "Inferno X", "en": "Inferno X", "code": "M2", "muster": ["inferno x", "\\bm2\\b"]},
+        {"id": "jp_m1", "de": "Mega Brave / Mega Symphonia", "en": "Mega Brave / Mega Symphonia", "code": "M1L / M1S", "muster": ["mega brave", "mega symphonia", "\\bm1[ls]\\b"]}
+      ]
+    },
+    {
+      "name": "China-Sets",
+      "jahre": "",
+      "sets": [
+        {"id": "cn", "de": "Chinesische Sets (CSV, Gem Packs)", "en": "Chinese sets", "code": "CSV/CBB", "muster": ["\\bcsv ?\\d", "\\bcbb ?\\d", "gem pack", "\\bcs ?\\d"]}
+      ]
+    }
+  ]
+}

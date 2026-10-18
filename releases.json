@@ -1,0 +1,20 @@
+{
+  "stand": "2026-10-18",
+  "hinweis": "Termine aus pokezentrum.de (Release-Kalender 2026) und tcgradar.eu, Stand 18.10.2026. Eigene Einträge einfach ergänzen: datum (JJJJ-MM-TT), name, sprache (DE/EN/JP/ALLE), art, produkte, set (ID aus sets.json, optional).",
+  "releases": [
+    {"datum": "2026-09-16", "name": "30 Jahre (Spezialset)", "sprache": "DE", "art": "Spezialset", "set": "30jahre", "produkte": "Booster, Displays; weltweit gleichzeitig (EN: 30th Celebration)"},
+    {"datum": "2026-10-02", "name": "30 Jahre Boosterbundle, Mini-Tin-Box & Gengar-2-Pack-Blister", "sprache": "DE", "art": "Produktwelle", "set": "30jahre", "produkte": "Boosterbundle, Mini-Tin-Box, Aufgewerteter 2-Pack-Blister Gengar"},
+    {"datum": "2026-10-23", "name": "Deckbau-Kollektion", "sprache": "DE", "art": "Kollektion", "produkte": "Deckbau-Kollektion"},
+    {"datum": "2026-10-24", "name": "Delta-Herrschaft Build & Battle Box (Prerelease 24.10.–01.11.)", "sprache": "DE", "art": "Prerelease", "set": "me06", "produkte": "Build & Battle Box, Prerelease-Turniere bei Händlern"},
+    {"datum": "2026-10-30", "name": "30 Jahre Kampfdecks (Psiana-ex & Nachtara-ex)", "sprache": "DE", "art": "Kampfdeck", "set": "30jahre", "produkte": "Kampfdecks"},
+    {"datum": "2026-11-05", "name": "McDonald's: Pokémon-Karten zum 30. Jubiläum", "sprache": "DE", "art": "Miniset", "produkte": "Happy-Meal-Aktion"},
+    {"datum": "2026-11-06", "name": "Mega-Entwicklung: Delta-Herrschaft (ME06)", "sprache": "DE", "art": "Hauptset", "set": "me06", "produkte": "36er Display, 18er Display, Booster, Blister, Boosterbundle, Top-Trainer-Box; Mega-Rayquaza-ex"},
+    {"datum": "2026-11-06", "name": "Mega Evolution: Delta Reign", "sprache": "EN", "art": "Hauptset", "set": "me06", "produkte": "Booster Display, Elite Trainer Box, Booster Bundle, Blister"},
+    {"datum": "2026-11-06", "name": "30 Jahre Ultra-Premium-, Premium- & Figuren-Kollektion", "sprache": "DE", "art": "Kollektion", "set": "30jahre", "produkte": "Ultra-Premium-Kollektion, Premium-Kollektion, Figuren-Kollektion"},
+    {"datum": "2026-11-13", "name": "Liga-Kampfdeck: Mega-Quajutsu-ex", "sprache": "DE", "art": "Kampfdeck", "produkte": "Liga-Kampfdeck"},
+    {"datum": "2026-11-27", "name": "M7 \"Aura Seeker\"", "sprache": "JP", "art": "Hauptset", "set": "jp_m7", "produkte": "Japanisches Hauptset"},
+    {"datum": "2026-12-04", "name": "30 Jahre Ordner-Kollektion", "sprache": "DE", "art": "Kollektion", "set": "30jahre", "produkte": "Ordner-Kollektion mit Boostern"},
+    {"datum": "2026-12-04", "name": "30th Celebration – weitere Produktwelle", "sprache": "EN", "art": "Produktwelle", "set": "30jahre", "produkte": "noch nicht benannt"},
+    {"datum": "2027-01-27", "name": "Valentinstags-Box (unbestätigt)", "sprache": "EN", "art": "Kollektion", "produkte": "unbestätigter Termin", "unbestaetigt": true}
+  ]
+}

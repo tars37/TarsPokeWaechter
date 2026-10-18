@@ -1,0 +1,11 @@
+# Lokale PC-Version: persönliche Einstellungen (ntfy-Thema, Zugangsschlüssel), Zustand, Protokoll
+config.json
+*.tmp
+*.db
+*.log
+*.log.*
+__pycache__/
+
+# Cloud-Lauf: entsteht bei jedem Lauf neu
+zustand/
+site/
