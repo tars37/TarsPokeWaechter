@@ -186,6 +186,12 @@ def main():
     melder = Melder(konfig)
     waechter = Waechter(konfig, speicher, melder)
 
+    if os.environ.get("TEST_PUSH", "").lower() == "true":
+        for kanal, ok, fehler in melder.senden("✅ TarsPokeWächter-Test aus der Cloud",
+                                               "Wenn du das liest, kommen die Restock-Meldungen von GitHub bei dir an.",
+                                               prio=4):
+            log.info("Test-Push über %s: %s", kanal, "OK" if ok else f"FEHLER {fehler}")
+
     jetzt = time.time()
     faellig = [s for s in waechter.shops_aktiv() if (speicher.shop(s["id"])["naechster"] or 0) <= jetzt + 120]
     log.info("%d Shops fällig: %s", len(faellig), ", ".join(s["id"] for s in faellig))
